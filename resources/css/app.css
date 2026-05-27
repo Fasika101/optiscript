@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* Prevent horizontal scroll on mobile */
+    html, body {
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    /* Safe area insets for notched phones */
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* Smooth scrolling */
+    * {
+        -webkit-tap-highlight-color: transparent;
+        scroll-behavior: smooth;
+    }
+
+    /* Better touch targets on mobile */
+    button, a, input, select, textarea {
+        touch-action: manipulation;
+    }
+
+    /* Prevent input zoom on iOS (keep font size ≥ 16px for inputs) */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+        font-size: 16px;
+    }
+
+    @media (min-width: 640px) {
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            font-size: 0.875rem; /* 14px on desktop */
+        }
+    }
+}
