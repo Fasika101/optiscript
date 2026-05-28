@@ -19,6 +19,12 @@
     <form method="POST" action="{{ route('prescriptions.store') }}" class="space-y-6">
         @csrf
 
+        @if (session('success'))
+            <div class="rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
+                {{ session('success') }}
+            </div>
+        @endif
+
         {{-- Patient & Date --}}
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
             <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wider flex items-center gap-2">
@@ -61,7 +67,7 @@
                     <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>
                     Scroll to see all fields
                 </p>
-                <table class="w-full min-w-[580px]">
+                <table class="w-full min-w-[480px]">
                     <thead>
                         <tr class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                             <th class="text-left pb-3 pr-4 w-24">Eye</th>
@@ -70,103 +76,10 @@
                             <th class="pb-3 px-2 text-center">Axis</th>
                             <th class="pb-3 px-2 text-center">Add</th>
                             <th class="pb-3 px-2 text-center">VA</th>
-                            <th class="pb-3 px-2 text-center">Prism</th>
-                            <th class="pb-3 px-2 text-center">Base</th>
                         </tr>
                     </thead>
                     <tbody class="space-y-2">
-                        {{-- OD Right Eye --}}
-                        <tr>
-                            <td class="pr-4 pb-3">
-                                <div class="bg-blue-50 border border-blue-100 rounded-xl px-3 py-2 text-center">
-                                    <p class="text-xs font-bold text-blue-800">OD</p>
-                                    <p class="text-xs text-blue-600">Right Eye</p>
-                                </div>
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="od_sphere" value="{{ old('od_sphere') }}" step="0.25" min="-30" max="30"
-                                       placeholder="e.g. -2.00"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="od_cylinder" value="{{ old('od_cylinder') }}" step="0.25" min="-10" max="10"
-                                       placeholder="e.g. -1.00"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="od_axis" value="{{ old('od_axis') }}" step="1" min="0" max="180"
-                                       placeholder="0-180"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="od_add" value="{{ old('od_add') }}" step="0.25" min="0" max="5"
-                                       placeholder="+0.00"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="text" name="od_va" value="{{ old('od_va') }}" placeholder="6/6"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="od_prism" value="{{ old('od_prism') }}" step="0.25" placeholder="0.00"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <select name="od_base" class="w-full px-2 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white">
-                                    <option value="">—</option>
-                                    <option value="BI" {{ old('od_base') == 'BI' ? 'selected' : '' }}>BI</option>
-                                    <option value="BO" {{ old('od_base') == 'BO' ? 'selected' : '' }}>BO</option>
-                                    <option value="BU" {{ old('od_base') == 'BU' ? 'selected' : '' }}>BU</option>
-                                    <option value="BD" {{ old('od_base') == 'BD' ? 'selected' : '' }}>BD</option>
-                                </select>
-                            </td>
-                        </tr>
-                        {{-- OS Left Eye --}}
-                        <tr>
-                            <td class="pr-4 pb-3">
-                                <div class="bg-violet-50 border border-violet-100 rounded-xl px-3 py-2 text-center">
-                                    <p class="text-xs font-bold text-violet-800">OS</p>
-                                    <p class="text-xs text-violet-600">Left Eye</p>
-                                </div>
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="os_sphere" value="{{ old('os_sphere') }}" step="0.25" min="-30" max="30"
-                                       placeholder="e.g. -2.00"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="os_cylinder" value="{{ old('os_cylinder') }}" step="0.25" min="-10" max="10"
-                                       placeholder="e.g. -1.00"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="os_axis" value="{{ old('os_axis') }}" step="1" min="0" max="180"
-                                       placeholder="0-180"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="os_add" value="{{ old('os_add') }}" step="0.25" min="0" max="5"
-                                       placeholder="+0.00"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="text" name="os_va" value="{{ old('os_va') }}" placeholder="6/6"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <input type="number" name="os_prism" value="{{ old('os_prism') }}" step="0.25" placeholder="0.00"
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent font-mono">
-                            </td>
-                            <td class="px-2 pb-3">
-                                <select name="os_base" class="w-full px-2 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white">
-                                    <option value="">—</option>
-                                    <option value="BI" {{ old('os_base') == 'BI' ? 'selected' : '' }}>BI</option>
-                                    <option value="BO" {{ old('os_base') == 'BO' ? 'selected' : '' }}>BO</option>
-                                    <option value="BU" {{ old('os_base') == 'BU' ? 'selected' : '' }}>BU</option>
-                                    <option value="BD" {{ old('os_base') == 'BD' ? 'selected' : '' }}>BD</option>
-                                </select>
-                            </td>
-                        </tr>
+                        @include('prescriptions.partials.rx-table-rows')
                     </tbody>
                 </table>
             </div>

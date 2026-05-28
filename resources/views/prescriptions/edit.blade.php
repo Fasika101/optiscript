@@ -53,7 +53,7 @@
             </h2>
 
             <div class="overflow-x-auto">
-                <table class="w-full min-w-[600px]">
+                <table class="w-full min-w-[480px]">
                     <thead>
                         <tr class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                             <th class="text-left pb-3 pr-4 w-24">Eye</th>
@@ -62,69 +62,10 @@
                             <th class="pb-3 px-2 text-center">Axis</th>
                             <th class="pb-3 px-2 text-center">Add</th>
                             <th class="pb-3 px-2 text-center">VA</th>
-                            <th class="pb-3 px-2 text-center">Prism</th>
-                            <th class="pb-3 px-2 text-center">Base</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="pr-4 pb-3">
-                                <div class="bg-blue-50 border border-blue-100 rounded-xl px-3 py-2 text-center">
-                                    <p class="text-xs font-bold text-blue-800">OD</p>
-                                    <p class="text-xs text-blue-600">Right</p>
-                                </div>
-                            </td>
-                            @foreach(['od_sphere','od_cylinder','od_axis','od_add','od_va','od_prism'] as $field)
-                            <td class="px-2 pb-3">
-                                <input type="{{ in_array($field, ['od_va']) ? 'text' : 'number' }}"
-                                       name="{{ $field }}"
-                                       value="{{ old($field, $prescription->$field) }}"
-                                       @if($field == 'od_sphere' || $field == 'od_cylinder') step="0.25"
-                                       @elseif($field == 'od_axis') step="1" min="0" max="180"
-                                       @elseif($field == 'od_add') step="0.25" min="0" max="5"
-                                       @elseif($field == 'od_prism') step="0.25"
-                                       @endif
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono">
-                            </td>
-                            @endforeach
-                            <td class="px-2 pb-3">
-                                <select name="od_base" class="w-full px-2 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white">
-                                    <option value="">—</option>
-                                    @foreach(['BI','BO','BU','BD'] as $base)
-                                    <option value="{{ $base }}" {{ old('od_base', $prescription->od_base) == $base ? 'selected' : '' }}>{{ $base }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="pr-4 pb-3">
-                                <div class="bg-violet-50 border border-violet-100 rounded-xl px-3 py-2 text-center">
-                                    <p class="text-xs font-bold text-violet-800">OS</p>
-                                    <p class="text-xs text-violet-600">Left</p>
-                                </div>
-                            </td>
-                            @foreach(['os_sphere','os_cylinder','os_axis','os_add','os_va','os_prism'] as $field)
-                            <td class="px-2 pb-3">
-                                <input type="{{ in_array($field, ['os_va']) ? 'text' : 'number' }}"
-                                       name="{{ $field }}"
-                                       value="{{ old($field, $prescription->$field) }}"
-                                       @if($field == 'os_sphere' || $field == 'os_cylinder') step="0.25"
-                                       @elseif($field == 'os_axis') step="1" min="0" max="180"
-                                       @elseif($field == 'os_add') step="0.25" min="0" max="5"
-                                       @elseif($field == 'os_prism') step="0.25"
-                                       @endif
-                                       class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono">
-                            </td>
-                            @endforeach
-                            <td class="px-2 pb-3">
-                                <select name="os_base" class="w-full px-2 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white">
-                                    <option value="">—</option>
-                                    @foreach(['BI','BO','BU','BD'] as $base)
-                                    <option value="{{ $base }}" {{ old('os_base', $prescription->os_base) == $base ? 'selected' : '' }}>{{ $base }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
+                        @include('prescriptions.partials.rx-table-rows', ['prescription' => $prescription])
                     </tbody>
                 </table>
             </div>

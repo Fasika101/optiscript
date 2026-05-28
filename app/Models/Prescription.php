@@ -22,6 +22,8 @@ class Prescription extends Model
     protected $casts = [
         'prescription_date' => 'date',
         'next_visit' => 'date',
+        'user_id' => 'integer',
+        'patient_id' => 'integer',
     ];
 
     public function user()

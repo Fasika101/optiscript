@@ -103,8 +103,7 @@
                                 <th class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">CYL</th>
                                 <th class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">AXIS</th>
                                 <th class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">ADD</th>
-                                <th class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">VA</th>
-                                <th class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3 rounded-r-xl">Prism/Base</th>
+                                <th class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3 rounded-r-xl">VA</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,10 +121,6 @@
                                 <td class="px-4 py-4 text-center font-mono text-sm font-semibold text-gray-900">{{ $prescription->od_axis !== null ? $prescription->od_axis . '°' : '—' }}</td>
                                 <td class="px-4 py-4 text-center font-mono text-sm font-semibold text-gray-900">{{ $prescription->formatValue($prescription->od_add) }}</td>
                                 <td class="px-4 py-4 text-center text-sm text-gray-900">{{ $prescription->od_va ?? '—' }}</td>
-                                <td class="px-4 py-4 text-center text-sm text-gray-900">
-                                    {{ $prescription->od_prism ? number_format($prescription->od_prism, 2) : '—' }}
-                                    @if($prescription->od_base) {{ $prescription->od_base }} @endif
-                                </td>
                             </tr>
                             <tr>
                                 <td class="px-4 py-4">
@@ -141,10 +136,6 @@
                                 <td class="px-4 py-4 text-center font-mono text-sm font-semibold text-gray-900">{{ $prescription->os_axis !== null ? $prescription->os_axis . '°' : '—' }}</td>
                                 <td class="px-4 py-4 text-center font-mono text-sm font-semibold text-gray-900">{{ $prescription->formatValue($prescription->os_add) }}</td>
                                 <td class="px-4 py-4 text-center text-sm text-gray-900">{{ $prescription->os_va ?? '—' }}</td>
-                                <td class="px-4 py-4 text-center text-sm text-gray-900">
-                                    {{ $prescription->os_prism ? number_format($prescription->os_prism, 2) : '—' }}
-                                    @if($prescription->os_base) {{ $prescription->os_base }} @endif
-                                </td>
                             </tr>
                         </tbody>
                     </table>

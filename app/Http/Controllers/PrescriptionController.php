@@ -6,6 +6,7 @@ use App\Models\Patient;
 use App\Models\Prescription;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PrescriptionController extends Controller
 {
@@ -35,7 +36,7 @@ class PrescriptionController extends Controller
     {
         $patients = Patient::where('user_id', auth()->id())->orderBy('name')->get();
         $selectedPatient = $request->filled('patient_id')
-            ? Patient::find($request->patient_id)
+            ? Patient::where('user_id', auth()->id())->find($request->patient_id)
             : null;
 
         return view('prescriptions.create', compact('patients', 'selectedPatient'));
@@ -44,22 +45,18 @@ class PrescriptionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'patient_id'       => 'required|exists:patients,id',
+            'patient_id'       => ['required', Rule::exists('patients', 'id')->where('user_id', auth()->id())],
             'prescription_date' => 'required|date',
-            'od_sphere'        => 'nullable|numeric|between:-30,30',
-            'od_cylinder'      => 'nullable|numeric|between:-10,10',
+            'od_sphere'        => 'nullable|numeric|between:-6,6',
+            'od_cylinder'      => 'nullable|numeric|between:-6,6',
             'od_axis'          => 'nullable|integer|between:0,180',
             'od_add'           => 'nullable|numeric|between:0,5',
             'od_va'            => 'nullable|string|max:20',
-            'od_prism'         => 'nullable|numeric',
-            'od_base'          => 'nullable|string|max:20',
-            'os_sphere'        => 'nullable|numeric|between:-30,30',
-            'os_cylinder'      => 'nullable|numeric|between:-10,10',
+            'os_sphere'        => 'nullable|numeric|between:-6,6',
+            'os_cylinder'      => 'nullable|numeric|between:-6,6',
             'os_axis'          => 'nullable|integer|between:0,180',
             'os_add'           => 'nullable|numeric|between:0,5',
             'os_va'            => 'nullable|string|max:20',
-            'os_prism'         => 'nullable|numeric',
-            'os_base'          => 'nullable|string|max:20',
             'pd_far'           => 'nullable|numeric|between:40,80',
             'pd_near'          => 'nullable|numeric|between:40,80',
             'pd_right'         => 'nullable|numeric|between:20,45',
@@ -99,22 +96,18 @@ class PrescriptionController extends Controller
         $this->authorize('update', $prescription);
 
         $validated = $request->validate([
-            'patient_id'       => 'required|exists:patients,id',
+            'patient_id'       => ['required', Rule::exists('patients', 'id')->where('user_id', auth()->id())],
             'prescription_date' => 'required|date',
-            'od_sphere'        => 'nullable|numeric|between:-30,30',
-            'od_cylinder'      => 'nullable|numeric|between:-10,10',
+            'od_sphere'        => 'nullable|numeric|between:-6,6',
+            'od_cylinder'      => 'nullable|numeric|between:-6,6',
             'od_axis'          => 'nullable|integer|between:0,180',
             'od_add'           => 'nullable|numeric|between:0,5',
             'od_va'            => 'nullable|string|max:20',
-            'od_prism'         => 'nullable|numeric',
-            'od_base'          => 'nullable|string|max:20',
-            'os_sphere'        => 'nullable|numeric|between:-30,30',
-            'os_cylinder'      => 'nullable|numeric|between:-10,10',
+            'os_sphere'        => 'nullable|numeric|between:-6,6',
+            'os_cylinder'      => 'nullable|numeric|between:-6,6',
             'os_axis'          => 'nullable|integer|between:0,180',
             'os_add'           => 'nullable|numeric|between:0,5',
             'os_va'            => 'nullable|string|max:20',
-            'os_prism'         => 'nullable|numeric',
-            'os_base'          => 'nullable|string|max:20',
             'pd_far'           => 'nullable|numeric|between:40,80',
             'pd_near'          => 'nullable|numeric|between:40,80',
             'pd_right'         => 'nullable|numeric|between:20,45',

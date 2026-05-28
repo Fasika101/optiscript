@@ -13,9 +13,10 @@ class AdminSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@ethioeye.com'],
             [
-                'name'     => 'Super Admin',
-                'role'     => 'admin',
-                'password' => Hash::make('Admin@1234'),
+                'name'              => 'Super Admin',
+                'role'              => 'admin',
+                'password'          => Hash::make('Admin@1234'),
+                'email_verified_at' => now(),
             ]
         );
     }

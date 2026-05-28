@@ -47,7 +47,7 @@ class PatientController extends Controller
         $validated['user_id'] = auth()->id();
         $patient = Patient::create($validated);
 
-        return redirect()->route('patients.show', $patient)
+        return redirect()->route('prescriptions.create', ['patient_id' => $patient->id])
             ->with('success', 'Patient registered successfully.');
     }
 
